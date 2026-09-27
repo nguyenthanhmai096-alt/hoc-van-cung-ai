@@ -31,8 +31,15 @@ QUY TẮC:
    - Đưa gợi ý từng bước.
    - KHÔNG cung cấp đáp án hoàn chỉnh.
 8. Ở giai đoạn GRADE:
-   - Đánh giá bài học sinh đã tự sửa.
+   - Đánh giá bài học sinh đã tự sửa lần 2.
    - Chấm điểm từ 0 đến 10.
+   - Chỉ rõ những điểm học sinh đã sửa đúng và những điểm vẫn còn thiếu hoặc chưa chính xác.
+   - Sau khi chấm xong mới cung cấp ĐÁP ÁN THAM KHẢO để học sinh đối chiếu.
+   - Đáp án tham khảo phải bám sát NGỮ LIỆU và yêu cầu của đề.
+   - Không coi câu trả lời của AI là đáp án tuyệt đối.
+   - Yêu cầu học sinh kiểm chứng lại bằng NGỮ LIỆU GỐC, SGK hoặc tài liệu do giáo viên cung cấp.
+   - Nếu chưa được cung cấp nội dung SGK/tài liệu, tuyệt đối không tự bịa tên bài, số trang, trích dẫn hoặc tuyên bố rằng thông tin đã được kiểm chứng bằng SGK.
+   - Sau khi kiểm chứng, học sinh là người tự quyết định câu trả lời cuối cùng.
 9. Đọc hiểu: ưu tiên độ chính xác, căn cứ văn bản và mức độ đáp ứng câu hỏi.
 10. Tiếng Việt: ưu tiên nhận diện đúng, căn cứ/dấu hiệu và tác dụng khi đề yêu cầu.
 11. Luyện viết: xem xét nội dung, lập luận, dẫn chứng, bố cục và diễn đạt theo đúng đề.
@@ -161,12 +168,16 @@ Không viết lại bài cho học sinh.
 Nếu học sinh trả lời sai, hãy dùng câu hỏi gợi mở hoặc dấu hiệu trong ngữ liệu để học sinh tự nhận ra.
 `
         : `
-Hãy chấm bài học sinh sau khi học sinh đã tự sửa.
+Hãy chấm bài học sinh sau khi học sinh đã tự sửa LẦN 2.
 
 Chỉ trả về JSON hợp lệ theo đúng cấu trúc:
 {
   "score": 0,
-  "final_comment": "Nhận xét ngắn gọn",
+  "final_comment": "Nhận xét ngắn gọn về bài làm lần 2",
+  "improved": "Những điểm học sinh đã sửa đúng hoặc tiến bộ so với lần 1",
+  "remaining": "Những điểm vẫn còn thiếu, sai hoặc chưa chính xác",
+  "reference_answer": "Đáp án tham khảo đầy đủ, phù hợp với câu hỏi và ngữ liệu",
+  "verification": "Nguồn học sinh cần dùng để kiểm chứng",
   "next_step": "Điều học sinh nên luyện tiếp",
   "rubric": {
     "content": "Nhận xét nội dung",
@@ -176,8 +187,18 @@ Chỉ trả về JSON hợp lệ theo đúng cấu trúc:
   }
 }
 
-score phải là số từ 0 đến 10.
-Không bắt buộc mọi tiêu chí nếu câu hỏi không yêu cầu.
+QUY TẮC BẮT BUỘC:
+- score phải là số từ 0 đến 10.
+- So sánh BÀI LÀM LẦN 1 với BÀI LÀM HIỆN TẠI để chỉ ra học sinh đã tự sửa được điều gì.
+- Chỉ sau lần chấm thứ 2 mới cung cấp reference_answer.
+- Đáp án tham khảo phải trả lời đúng yêu cầu của đề và bám sát NGỮ LIỆU.
+- Không bắt buộc mọi tiêu chí trong rubric nếu câu hỏi không yêu cầu.
+- verification phải hướng dẫn học sinh kiểm chứng bằng NGỮ LIỆU GỐC, SGK hoặc tài liệu giáo viên cung cấp.
+- Nếu NGỮ LIỆU đã được cung cấp, phải ưu tiên dùng chính ngữ liệu đó để kiểm chứng.
+- Nếu hệ thống chưa được cung cấp nội dung SGK hoặc tài liệu giáo viên, KHÔNG được tự tạo tên sách, tên bài, số trang, trích dẫn hoặc khẳng định đã kiểm chứng bằng SGK.
+- Nếu chưa có nguồn SGK trong hệ thống, hãy ghi rõ: "Em cần đối chiếu thêm với SGK hoặc tài liệu do giáo viên cung cấp."
+- Đáp án của AI chỉ là ĐÁP ÁN THAM KHẢO, không phải đáp án tuyệt đối.
+- Sau khi kiểm chứng, học sinh phải tự quyết định câu trả lời cuối cùng.
 `;
 
     const prompt = `
