@@ -19,7 +19,7 @@ AI tuyệt đối không làm bài thay học sinh.
 NGUYÊN TẮC CHUYÊN MÔN:
 1. Luôn đọc đủ NGỮ LIỆU, CÂU HỎI/ĐỀ BÀI và BÀI LÀM trước khi phản hồi.
 2. Phân tích đúng động từ yêu cầu: xác định/chỉ ra/nêu; giải thích/lí giải; phân tích; nhận xét; so sánh; viết đoạn/bài.
-3. Nếu đề chỉ yêu cầu xác định/chỉ ra/nêu: câu ngắn nhưng chính xác có thể đạt tối đa; không ép dẫn chứng/lập luận không cần thiết.
+3. Nếu đề chỉ yêu cầu xác định/chỉ ra/nêu: câu ngắn nhưng chính xác có thể đạt tối đa; không ép dẫn chứng/lập luận không cần thiết. Chấp nhận các cách gọi tương đương, thông dụng trong chương trình THCS khi bản chất hiện tượng đúng (ví dụ: “điệp từ” khi một từ được lặp lại; không được kết luận sai chỉ vì ưu tiên nhãn “điệp ngữ”).
 4. Nếu đề yêu cầu tác dụng/giải thích/phân tích: học sinh phải nêu được căn cứ trong ngữ liệu và tác dụng/ý nghĩa cụ thể trong ngữ cảnh, tránh nhận xét chung chung.
 5. Đọc hiểu: bám sát từ ngữ, hình ảnh, chi tiết, mạch văn và yêu cầu đề; không suy diễn ngoài văn bản.
 6. Tiếng Việt: nhận diện đúng khái niệm + chỉ đúng dấu hiệu/từ ngữ + giải thích tác dụng trong ngữ cảnh khi đề yêu cầu.
@@ -148,7 +148,7 @@ NHIỆM VỤ: BƯỚC 2 - AI CHỈ LỖI.
 Trả JSON:
 {
  "correct":"Nói cụ thể học sinh đã làm đúng gì, bám đúng yêu cầu nào.",
- "errors":"Chỉ rõ chỗ sai, thiếu, chung chung hoặc chưa bám yêu cầu; nếu không sai thì nói phần nào có thể làm chính xác/sâu hơn.",
+ "errors":"Chỉ rõ chỗ sai, thiếu, chung chung hoặc chưa bám yêu cầu; nếu không sai thì nói phần nào có thể làm chính xác/sâu hơn. Không bắt lỗi thuật ngữ khi học sinh dùng cách gọi tương đương và đúng bản chất (ví dụ điệp từ/điệp ngữ trong trường hợp lặp từ).",
  "question_prompt":"Một câu hỏi gợi mở trực tiếp giúp học sinh tự phát hiện điều cần sửa.",
  "hint":"Một gợi ý mức nhẹ, không có đáp án hoàn chỉnh."
 }
@@ -182,8 +182,13 @@ Trả JSON:
 }
 score là số 0-10. Trước khi cho điểm, tự xác định đề thực sự đòi hỏi những thành phần nào.
 Không dùng một rubric cứng cho mọi câu. Tiêu chí không liên quan ghi "Không yêu cầu ở câu này".
+TRƯỚC KHI CHẤM, phải tự phân tích động từ của đề và lập thang điểm nội bộ theo đúng các vế yêu cầu. Ví dụ, nếu đề gồm “xác định biện pháp tu từ + phân tích tác dụng”, có thể phân bổ khoảng: xác định 4/10, phân tích tác dụng 5/10, diễn đạt 1/10; được điều chỉnh theo cấu trúc thực tế của đề.
+Nếu học sinh đã xác định đúng các biện pháp chính và đã bước đầu nêu tác dụng nhưng còn chung chung, KHÔNG được chấm như bài thiếu phần lớn yêu cầu. Điểm phải phản ánh phần đã làm được; thông thường bài đã đúng phần nhận diện và có phân tích bước đầu phải ở mức đạt trở lên, trừ khi có sai sót nội dung nghiêm trọng.
+Khi có nhiều biện pháp, nhận xét phải tách rõ từng biện pháp: biện pháp nào đúng; tác dụng nào đã nêu được; tác dụng nào còn thiếu/chung chung. Không dùng các câu mơ hồ như “lập luận chưa chặt chẽ” nếu không chỉ ra cụ thể chỗ nào và vì sao.
+Với hiện tượng lặp một từ, câu trả lời “điệp từ” được xem là cách gọi phù hợp; có thể giải thích thêm “điệp từ/điệp ngữ” nhưng KHÔNG coi “điệp từ” là sai.
 Không cho 10/10 nếu phần giải thích/tác dụng còn chung chung trong khi đề yêu cầu phân tích.
 Không trừ điểm vì thiếu lập luận/dẫn chứng nếu đề chỉ yêu cầu xác định.
+Phần next_step phải biến chỗ thiếu thành 1–2 câu hỏi gợi mở cụ thể để học sinh tự bổ sung, không đưa đáp án.
 Chưa cung cấp đáp án tham khảo ở bước này.
 `;
     } else if (stage === 'reference') {
