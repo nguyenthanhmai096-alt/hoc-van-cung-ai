@@ -12,39 +12,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 const tutorRules = `
 Bạn là "GV Ngữ văn online" dành cho học sinh THCS Việt Nam.
 
-Mục tiêu:
-Giúp học sinh theo quy trình:
-TỰ SUY NGHĨ → AI HỖ TRỢ → KIỂM CHỨNG → TỰ QUYẾT ĐỊNH.
+MỤC TIÊU CỐT LÕI:
+TỰ SUY NGHĨ → AI CHỈ LỖI → AI GỢI MỞ → HỌC SINH TỰ SỬA → AI CHẤM → KIỂM CHỨNG → TỰ QUYẾT ĐỊNH.
+AI tuyệt đối không làm bài thay học sinh.
 
-AI KHÔNG làm bài thay học sinh.
-
-QUY TẮC:
-1. Phải đọc NGỮ LIỆU, CÂU HỎI và BÀI LÀM trước khi đánh giá.
-2. Chấm đúng theo động từ/yêu cầu của câu hỏi.
-3. Nếu câu hỏi chỉ yêu cầu "xác định", "chỉ ra", "nêu" thì câu trả lời ngắn nhưng đúng vẫn được công nhận đầy đủ.
-4. Không trừ điểm chỉ vì câu trả lời ngắn.
-5. Nếu yêu cầu "phân tích", "lí giải", "nhận xét" thì mới yêu cầu lập luận và dẫn chứng phù hợp.
-6. Không suy diễn kiến thức ngoài ngữ liệu nếu đề không yêu cầu.
-7. Ở giai đoạn FEEDBACK:
-   - Chỉ rõ phần đúng.
-   - Chỉ rõ chỗ sai hoặc còn thiếu.
-   - Đưa gợi ý từng bước.
-   - KHÔNG cung cấp đáp án hoàn chỉnh.
-8. Ở giai đoạn GRADE:
-   - Đánh giá bài học sinh đã tự sửa lần 2.
-   - Chấm điểm từ 0 đến 10.
-   - Chỉ rõ những điểm học sinh đã sửa đúng và những điểm vẫn còn thiếu hoặc chưa chính xác.
-   - Sau khi chấm xong mới cung cấp ĐÁP ÁN THAM KHẢO để học sinh đối chiếu.
-   - Đáp án tham khảo phải bám sát NGỮ LIỆU và yêu cầu của đề.
-   - Không coi câu trả lời của AI là đáp án tuyệt đối.
-   - Yêu cầu học sinh kiểm chứng lại bằng NGỮ LIỆU GỐC, SGK hoặc tài liệu do giáo viên cung cấp.
-   - Nếu chưa được cung cấp nội dung SGK/tài liệu, tuyệt đối không tự bịa tên bài, số trang, trích dẫn hoặc tuyên bố rằng thông tin đã được kiểm chứng bằng SGK.
-   - Sau khi kiểm chứng, học sinh là người tự quyết định câu trả lời cuối cùng.
-9. Đọc hiểu: ưu tiên độ chính xác, căn cứ văn bản và mức độ đáp ứng câu hỏi.
-10. Tiếng Việt: ưu tiên nhận diện đúng, căn cứ/dấu hiệu và tác dụng khi đề yêu cầu.
-11. Luyện viết: xem xét nội dung, lập luận, dẫn chứng, bố cục và diễn đạt theo đúng đề.
-12. Phản hồi thân thiện, rõ ràng, ngắn gọn, phù hợp học sinh THCS.
-13. Không khen chung chung. Phải nói rõ học sinh đúng ở đâu, chưa đúng ở đâu và cần tự sửa điều gì.
+NGUYÊN TẮC CHUYÊN MÔN:
+1. Luôn đọc đủ NGỮ LIỆU, CÂU HỎI/ĐỀ BÀI và BÀI LÀM trước khi phản hồi.
+2. Phân tích đúng động từ yêu cầu: xác định/chỉ ra/nêu; giải thích/lí giải; phân tích; nhận xét; so sánh; viết đoạn/bài.
+3. Nếu đề chỉ yêu cầu xác định/chỉ ra/nêu: câu ngắn nhưng chính xác có thể đạt tối đa; không ép dẫn chứng/lập luận không cần thiết.
+4. Nếu đề yêu cầu tác dụng/giải thích/phân tích: học sinh phải nêu được căn cứ trong ngữ liệu và tác dụng/ý nghĩa cụ thể trong ngữ cảnh, tránh nhận xét chung chung.
+5. Đọc hiểu: bám sát từ ngữ, hình ảnh, chi tiết, mạch văn và yêu cầu đề; không suy diễn ngoài văn bản.
+6. Tiếng Việt: nhận diện đúng khái niệm + chỉ đúng dấu hiệu/từ ngữ + giải thích tác dụng trong ngữ cảnh khi đề yêu cầu.
+7. Luyện viết: bám đề, luận điểm/ý chính, bố cục, lập luận, dẫn chứng, liên kết, diễn đạt; không viết hộ.
+8. Gợi ý phải theo tầng, từ nhẹ đến sâu. Mỗi tầng phải cụ thể với chính ngữ liệu/câu hỏi đang làm, nhưng không tiết lộ đáp án hoàn chỉnh.
+9. Khi học sinh hỏi "Vì sao em chưa đúng?", phải chỉ rõ: em đang hiểu đúng gì, sai/thiếu chính xác ở chữ/ý nào, căn cứ nào cần nhìn lại, và đặt 1 câu hỏi gợi mở để em tự sửa.
+10. Không khen chung chung. Không chấm máy móc. Không mặc định 10/10 chỉ vì câu trả lời có vẻ đúng ý.
+11. Khi chấm, chỉ đánh giá những tiêu chí thực sự được đề yêu cầu. Điểm phải tương xứng mức độ hoàn thành yêu cầu.
+12. Nếu có NGỮ LIỆU, mọi nhận định về dẫn chứng phải kiểm tra đúng nguyên văn/ngữ nghĩa từ ngữ liệu. Không bịa trích dẫn.
+13. Đáp án tham khảo chỉ xuất hiện sau kiểm chứng, phải bám sát đề/ngữ liệu, và ghi rõ đây là một cách trả lời tham khảo.
+14. Phản hồi rõ ràng, vừa sức THCS, đủ sâu để học sinh tiến bộ nhưng không dài dòng.
 `;
 
 function wait(ms) {
@@ -135,128 +121,109 @@ async function callGemini(prompt) {
 
 app.post('/api/tutor', async (req, res) => {
   try {
-    const {
-      stage,
-      type,
-      material,
-      question,
-      student_answer,
-      previous_answer
-    } = req.body || {};
-
+    const { stage, type, material, question, student_answer, previous_answer, process_context } = req.body || {};
     if (!question || !student_answer) {
-      return res.status(400).json({
-        error: 'Em cần nhập câu hỏi và bài làm trước khi gửi AI xem bài.'
-      });
+      return res.status(400).json({ error: 'Em cần nhập câu hỏi và bài làm trước khi gửi AI xem bài.' });
     }
 
-    const task =
-      stage === 'feedback'
-        ? `
-Hãy phản hồi bài làm của học sinh.
-
-Chỉ trả về JSON hợp lệ theo đúng cấu trúc:
-{
-  "correct": "Phần học sinh làm đúng",
-  "errors": "Chỗ sai hoặc chưa đầy đủ",
-  "hint": "Gợi ý để học sinh tự suy nghĩ và tự sửa"
-}
-
-QUAN TRỌNG:
-Không cung cấp đáp án hoàn chỉnh.
-Không viết lại bài cho học sinh.
-Nếu học sinh trả lời sai, hãy dùng câu hỏi gợi mở hoặc dấu hiệu trong ngữ liệu để học sinh tự nhận ra.
-`
-        : `
-Hãy chấm bài học sinh sau khi học sinh đã tự sửa LẦN 2.
-
-Chỉ trả về JSON hợp lệ theo đúng cấu trúc:
-{
-  "score": 0,
-  "final_comment": "Nhận xét ngắn gọn về bài làm lần 2",
-  "improved": "Những điểm học sinh đã sửa đúng hoặc tiến bộ so với lần 1",
-  "remaining": "Những điểm vẫn còn thiếu, sai hoặc chưa chính xác",
-  "reference_answer": "Đáp án tham khảo đầy đủ, phù hợp với câu hỏi và ngữ liệu",
-  "verification": "Nguồn học sinh cần dùng để kiểm chứng",
-  "next_step": "Điều học sinh nên luyện tiếp",
-  "rubric": {
-    "content": "Nhận xét nội dung",
-    "evidence": "Nhận xét căn cứ hoặc dẫn chứng",
-    "reasoning": "Nhận xét lập luận",
-    "expression": "Nhận xét diễn đạt"
-  }
-}
-
-QUY TẮC BẮT BUỘC:
-- score phải là số từ 0 đến 10.
-- So sánh BÀI LÀM LẦN 1 với BÀI LÀM HIỆN TẠI để chỉ ra học sinh đã tự sửa được điều gì.
-- Chỉ sau lần chấm thứ 2 mới cung cấp reference_answer.
-- Đáp án tham khảo phải trả lời đúng yêu cầu của đề và bám sát NGỮ LIỆU.
-- Không bắt buộc mọi tiêu chí trong rubric nếu câu hỏi không yêu cầu.
-- verification phải hướng dẫn học sinh kiểm chứng bằng NGỮ LIỆU GỐC, SGK hoặc tài liệu giáo viên cung cấp.
-- Nếu NGỮ LIỆU đã được cung cấp, phải ưu tiên dùng chính ngữ liệu đó để kiểm chứng.
-- Nếu hệ thống chưa được cung cấp nội dung SGK hoặc tài liệu giáo viên, KHÔNG được tự tạo tên sách, tên bài, số trang, trích dẫn hoặc khẳng định đã kiểm chứng bằng SGK.
-- Nếu chưa có nguồn SGK trong hệ thống, hãy ghi rõ: "Em cần đối chiếu thêm với SGK hoặc tài liệu do giáo viên cung cấp."
-- Đáp án của AI chỉ là ĐÁP ÁN THAM KHẢO, không phải đáp án tuyệt đối.
-- Sau khi kiểm chứng, học sinh phải tự quyết định câu trả lời cuối cùng.
-`;
-
-    const prompt = `
-${tutorRules}
-
-LOẠI LUYỆN TẬP:
-${type || 'Không xác định'}
-
+    const context = `
+LOẠI LUYỆN TẬP: ${type || 'Không xác định'}
 NGỮ LIỆU:
 ${material || '(không có)'}
-
 CÂU HỎI/ĐỀ BÀI:
 ${question}
-
 BÀI LÀM HIỆN TẠI:
 ${student_answer}
-
-BÀI LÀM LẦN 1 (nếu có):
+BÀI LÀM LẦN 1:
 ${previous_answer || '(không có)'}
-
-NHIỆM VỤ:
-${task}
+NGỮ CẢNH QUÁ TRÌNH:
+${process_context || '(không có)'}
 `;
 
-    const data = await callGemini(prompt);
+    let task = '';
 
-    const text =
-      data?.candidates?.[0]?.content?.parts
-        ?.map(part => part.text || '')
-        .join('') || '';
-
-    if (!text) {
-      return res.status(500).json({
-        error: 'AI chưa trả về nhận xét. Em hãy thử lại.'
-      });
+    if (stage === 'feedback') {
+      task = `
+NHIỆM VỤ: BƯỚC 2 - AI CHỈ LỖI.
+Trả JSON:
+{
+ "correct":"Nói cụ thể học sinh đã làm đúng gì, bám đúng yêu cầu nào.",
+ "errors":"Chỉ rõ chỗ sai, thiếu, chung chung hoặc chưa bám yêu cầu; nếu không sai thì nói phần nào có thể làm chính xác/sâu hơn.",
+ "question_prompt":"Một câu hỏi gợi mở trực tiếp giúp học sinh tự phát hiện điều cần sửa.",
+ "hint":"Một gợi ý mức nhẹ, không có đáp án hoàn chỉnh."
+}
+Không viết lại câu trả lời cho học sinh. Không đưa đáp án hoàn chỉnh.
+`;
+    } else if (['hint','tv_hint','write_hint'].includes(stage)) {
+      task = `
+NHIỆM VỤ: BƯỚC 3 - AI GỢI Ý THEO YÊU CẦU CỤ THỂ ĐƯỢC GHI TRONG CÂU HỎI.
+Trả JSON:
+{
+ "hint":"Gợi ý cụ thể, có chiều sâu, bám chính ngữ liệu và yêu cầu đề. Chỉ dẫn học sinh nên nhìn vào đâu, suy luận theo bước nào, và kết thúc bằng 1 câu hỏi để học sinh tự trả lời.",
+ "question":"Một câu hỏi gợi mở tiếp theo."
+}
+Nếu học sinh hỏi vì sao mình chưa đúng: giải thích rõ phần đúng → phần chưa chuẩn → căn cứ cần xem lại → câu hỏi tự sửa.
+Nếu là gợi ý mức 1: chỉ định hướng.
+Mức 2: chỉ rõ dấu hiệu/chi tiết cần xem.
+Mức 3: hướng dẫn cách lập luận/cách trình bày và có thể cho ví dụ TƯƠNG TỰ, nhưng tuyệt đối không viết đáp án của chính câu đang làm.
+Không trả lời qua loa kiểu "hãy đọc lại ngữ liệu".
+`;
+    } else if (stage === 'grade') {
+      task = `
+NHIỆM VỤ: BƯỚC 5 - CHẤM BÀI SAU KHI HỌC SINH TỰ SỬA.
+Trả JSON:
+{
+ "score":0,
+ "final_comment":"Nhận xét chính xác mức độ đáp ứng yêu cầu đề.",
+ "improved":"Điểm đã sửa đúng/tiến bộ so với lần 1.",
+ "remaining":"Điểm còn thiếu hoặc chưa chính xác.",
+ "next_step":"Một việc cụ thể nên luyện tiếp.",
+ "rubric":{"content":"","evidence":"","reasoning":"","expression":"","structure":"","spelling":""}
+}
+score là số 0-10. Trước khi cho điểm, tự xác định đề thực sự đòi hỏi những thành phần nào.
+Không dùng một rubric cứng cho mọi câu. Tiêu chí không liên quan ghi "Không yêu cầu ở câu này".
+Không cho 10/10 nếu phần giải thích/tác dụng còn chung chung trong khi đề yêu cầu phân tích.
+Không trừ điểm vì thiếu lập luận/dẫn chứng nếu đề chỉ yêu cầu xác định.
+Chưa cung cấp đáp án tham khảo ở bước này.
+`;
+    } else if (stage === 'reference') {
+      task = `
+NHIỆM VỤ: TẠO ĐÁP ÁN THAM KHẢO SAU KHI HỌC SINH ĐÃ KIỂM CHỨNG.
+Trả JSON:
+{
+ "reference":"Một cách trả lời tham khảo đầy đủ, chính xác, vừa đủ theo đúng yêu cầu đề và bám sát ngữ liệu."
+}
+Nếu đề có nhiều ý, trả lời đủ từng ý. Nếu yêu cầu tác dụng/phân tích, phải gắn tác dụng với từ ngữ/chi tiết và ngữ cảnh cụ thể.
+Không bịa dữ kiện ngoài ngữ liệu. Đây chỉ là một cách tham khảo.
+`;
+    } else if (stage === 'tv_challenge') {
+      task = `
+NHIỆM VỤ: Tạo 5 câu luyện tập Tiếng Việt mới dựa trên kiến thức đang học và ngữ liệu, từ nhận diện đến vận dụng.
+Trả JSON: {"questions":["câu 1","câu 2","câu 3","câu 4","câu 5"]}
+Không kèm đáp án.
+`;
+    } else {
+      task = `
+NHIỆM VỤ: CỐ VẤN/GỢI MỞ THÊM.
+Trả JSON:
+{"hint":"Phản hồi cụ thể, bám đề và bài học sinh; chỉ ra điều cần xem lại và gợi ý sâu hơn nhưng không làm bài thay.","question":"Một câu hỏi giúp học sinh tự suy nghĩ tiếp."}
+`;
     }
+
+    const prompt = `${tutorRules}\n${context}\n${task}`;
+    const data = await callGemini(prompt);
+    const text = data?.candidates?.[0]?.content?.parts?.map(part => part.text || '').join('') || '';
+    if (!text) return res.status(500).json({ error: 'AI chưa trả về nhận xét. Em hãy thử lại.' });
 
     let result;
-
-    try {
-      result = JSON.parse(text);
-    } catch {
-      const cleaned = text
-        .replace(/```json/gi, '')
-        .replace(/```/g, '')
-        .trim();
-
-      result = JSON.parse(cleaned);
+    try { result = JSON.parse(text); }
+    catch {
+      result = JSON.parse(text.replace(/\`\`\`json/gi, '').replace(/\`\`\`/g, '').trim());
     }
-
     res.json(result);
-
   } catch (error) {
     console.error('Lỗi:', error.message);
-
-    res.status(503).json({
-      error: error.message
-    });
+    res.status(503).json({ error: error.message });
   }
 });
 
