@@ -52,16 +52,23 @@ function chooseSection(section){
 function useLibrarySource(section){
  if(!selectedSource)return;
  const detail=selectedSource+' – mục '+section;
- if($('source'))$('source').value='SGK Ngữ văn';
- if($('sourceDetail'))$('sourceDetail').value=detail;
  localStorage.setItem('hv_source_detail',detail);
- alert('Đã chọn nguồn SGK. Bây giờ em sẽ quay lại Bước 7 để tự ghi bằng chứng.');
  go('practice');
+ if($('setup'))$('setup').classList.add('hidden');
+ if($('work'))$('work').classList.remove('hidden');
  if($('graded'))$('graded').classList.remove('hidden');
  if($('verifyGate'))$('verifyGate').classList.remove('hidden');
+ if($('decisionGate'))$('decisionGate').classList.add('hidden');
+ verified=false;
  restoreLibrarySource();
  progress(7);
- setTimeout(()=>{if($('evidence'))$('evidence').focus();},0);
+ const gate=$('verifyGate');
+ if(gate)gate.scrollIntoView({behavior:'smooth',block:'start'});
+ setTimeout(()=>{
+   if($('source'))$('source').value='SGK Ngữ văn';
+   if($('sourceDetail'))$('sourceDetail').value=detail;
+   if($('evidence'))$('evidence').focus();
+ },350);
 }
 function safe(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}library();progress(1);
 </script></body></html>
