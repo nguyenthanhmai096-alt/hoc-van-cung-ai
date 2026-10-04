@@ -32,6 +32,23 @@ function finishVerify(){if(!advisorDone)return alert('Em cần hoàn thành bư�
 function save(){if(!verified)return alert('Em chưa hoàn thành kiểm chứng.');if(!val('decision')||!meaningful(val('reason'),10)||!meaningful(val('finalAnswer'),type==='write'?40:8))return alert('Em hãy ghi quyết định, lí do và bài làm cuối.');if(!meaningful(val('j1'),8)||!meaningful(val('j2'),8)||!meaningful(val('j3'),8))return alert('Em hãy hoàn thành đủ 3 câu Nhật kí tư duy.');let h=JSON.parse(localStorage.getItem(HK)||'[]');h.unshift({time:new Date().toLocaleString('vi-VN'),type,question:val('question'),before:val('draft1'),after:val('draft2'),score:gradeData?.score,source:val('source')+(val('sourceDetail')?' – '+val('sourceDetail'):''),evidence:val('evidence'),verify:val('verifyConclusion'),decision:val('decision'),reason:val('reason'),final:val('finalAnswer'),journal:[val('j1'),val('j2'),val('j3')]});localStorage.setItem(HK,JSON.stringify(h.slice(0,30)));alert('Đã lưu. Sản phẩm cuối là quyết định của chính em.');go('profile');historyView()}
 function historyView(){let h=JSON.parse(localStorage.getItem(HK)||'[]');$('history').innerHTML=h.length?h.map(x=>'<div class="card"><b>'+safe(x.time)+' • '+safe(x.type)+' • '+safe(x.score??'—')+'/10</b><p><b>Đề:</b> '+safe(x.question)+'</p><p><b>Kiểm chứng:</b> '+safe(x.source)+' → '+safe(x.verify)+'</p><p><b>Quyết định:</b> '+safe(x.decision)+' – '+safe(x.reason)+'</p><p><b>Bài cuối:</b> '+safe(x.final)+'</p><p><b>Nhật kí:</b><br>1. '+safe(x.journal?.[0])+'<br>2. '+safe(x.journal?.[1])+'<br>3. '+safe(x.journal?.[2])+'</p></div>').join(''):'<p>Chưa có bài hoàn thành.</p>'}
 function library(){let out='';for(let g=6;g<=9;g++){out+='<h3>Lớp '+g+'</h3>';for(let t=1;t<=2;t++){out+='<b>Tập '+t+'</b><div>';lessons[g][t].forEach((x,i)=>out+='<button onclick="showLesson('+g+','+t+','+i+')">'+safe(x)+'</button>');out+='</div>'}}$('kb').innerHTML=out}
-function showLesson(g,t,i){$('kbResult').innerHTML='<div class="box verify"><b>'+safe(lessons[g][t][i])+'</b><p>Nguồn kiểm chứng: <b>SGK Ngữ văn '+g+', Tập '+t+', bộ Kết nối tri thức với cuộc sống</b>.</p><p>Các mục nên đối chiếu: Tri thức Ngữ văn • Đọc hiểu • Tiếng Việt • Viết; và Nói và nghe/Củng cố – mở rộng/Thực hành đọc khi bài có mục tương ứng.</p><p class="note">Kho chỉ lập chỉ mục. Em hãy mở SGK/tài liệu do giáo viên cung cấp để đọc nguồn gốc và tự ghi bằng chứng.</p></div>'}
+let selectedSource='';
+function showLesson(g,t,i){
+ const lesson=lessons[g][t][i], src='SGK Ngữ văn '+g+', Tập '+t+', '+lesson+', bộ Kết nối tri thức với cuộc sống';
+ selectedSource=src;
+ const sections=['Tri thức Ngữ văn','Đọc hiểu','Tiếng Việt','Viết','Nói và nghe','Củng cố – mở rộng','Thực hành đọc'];
+ $('kbResult').innerHTML='<div class="box verify"><h3>'+safe(lesson)+'</h3><p>Nguồn kiểm chứng: <b>'+safe(src)+'</b>.</p><p><b>1. Chọn nội dung em cần kiểm chứng:</b></p><div>'+sections.map(x=>'<button onclick="chooseSection(\''+safe(x)+'\')">'+safe(x)+'</button>').join(' ')+'</div><div id="kbSection"></div><p class="note">Kho chỉ lập chỉ mục, không đưa sẵn đáp án. Em phải mở SGK/tài liệu do giáo viên cung cấp, đọc nguồn và tự ghi bằng chứng.</p></div>';
+}
+function chooseSection(section){
+ $('kbSection').innerHTML='<div class="card"><p><b>Đang kiểm chứng:</b> '+safe(section)+'</p><p>① Mở đúng bài trong SGK. ② Tìm mục <b>'+safe(section)+'</b> nếu bài có mục này. ③ Đọc phần liên quan. ④ Tự ghi lại bằng chứng bằng lời của em ở Bước 7.</p><button class="primary" onclick="useLibrarySource(\''+safe(section)+'\')">Dùng nguồn này để kiểm chứng</button></div>';
+}
+function useLibrarySource(section){
+ if(!selectedSource)return;
+ const detail=selectedSource+' – mục '+section;
+ if($('source'))$('source').value='SGK Ngữ văn';
+ if($('sourceDetail'))$('sourceDetail').value=detail;
+ localStorage.setItem('hv_source_detail',detail);
+ alert('Đã chọn nguồn SGK. Website chỉ ghi nguồn; em vẫn phải tự đọc và tự ghi bằng chứng.');
+}
 function safe(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}library();progress(1);
 </script></body></html>
