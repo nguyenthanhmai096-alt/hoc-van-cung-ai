@@ -83,7 +83,7 @@ footer{padding-bottom:38px}
 <div id="work" class="hidden"><div class="box" id="taskView"></div><label>Bài làm lần 1 – em tự làm trước</label><textarea id="draft1"></textarea><button class="primary" onclick="feedback()">🤖 AI chỉ lỗi</button></div>
 <div id="fb" class="hidden"><div class="box good"><b>✅ Phần em làm đúng</b><div id="correct"></div></div><div class="box bad"><b>🔎 Chỗ cần xem lại</b><div id="errors"></div></div><div class="box warn"><b>💭 Câu hỏi gợi mở</b><div id="prompt"></div></div><label>Chọn mức gợi ý</label><select id="hintLevel"><option value="1">Mức 1 – gợi hướng</option><option value="2">Mức 2 – gợi dấu hiệu/căn cứ</option><option value="3">Mức 3 – gợi từng bước, vẫn không cho đáp án</option></select><button onclick="hint()">💡 Xin gợi ý</button><div id="hintBox" class="box warn hidden"></div><label>Em tự sửa – bài làm lần 2</label><textarea id="draft2"></textarea><label id="fingerLabel" class="hidden">✍️ “Dấu vân tay của em” – điều em tự thêm/sửa bằng suy nghĩ của mình</label><textarea id="finger" class="hidden"></textarea><button class="primary" onclick="grade()">Tôi đã tự sửa → AI chấm</button></div>
 <div id="graded" class="hidden"><div class="box good"><b>🎯 AI CHẤM</b><div id="score" class="score"></div><div id="final"></div><div id="rubric"></div></div><div class="box"><b>👩‍🏫 CÔ MAI – CỐ VẤN ONLINE</b><button onclick="advisor()">Xin cô Mai cố vấn</button><div id="advisorBox"></div></div>
-<div id="verifyGate" class="hidden"><div class="box verify"><h3>🔎 BƯỚC 7 – KIỂM CHỨNG</h3><label>AI/Cô Mai nói gì mà em cần kiểm tra?</label><textarea id="claim"></textarea><label>Dự đoán của em</label><select id="prediction"><option value="">-- Chọn --</option><option>Đúng</option><option>Chưa chắc</option><option>Có thể sai</option></select><label>Nguồn em dùng để đối chiếu</label><select id="source"><option value="">-- Chọn nguồn --</option><option>Ngữ liệu gốc</option><option>SGK Ngữ văn</option><option>Phiếu/tài liệu giáo viên</option><option>Nguồn chính thống khác</option></select><label>Ghi rõ nguồn/bài/trang nếu có</label><input id="sourceDetail"><label>Bằng chứng em tìm được</label><textarea id="evidence"></textarea><label>Kết luận sau đối chiếu</label><select id="verifyConclusion"><option value="">-- Chọn --</option><option>AI đúng</option><option>AI đúng một phần</option><option>AI cần sửa</option></select><button class="primary" onclick="finishVerify()">Tôi đã tự kiểm chứng</button></div></div>
+<div id="verifyGate" class="hidden"><div class="box verify"><h3>🔎 BƯỚC 7 – KIỂM CHỨNG</h3><label>AI/Cô Mai nói gì mà em cần kiểm tra?</label><textarea id="claim"></textarea><label>Dự đoán của em</label><select id="prediction"><option value="">-- Chọn --</option><option>Đúng</option><option>Chưa chắc</option><option>Có thể sai</option></select><label>Nguồn em dùng để đối chiếu</label><select id="source"><option value="">-- Chọn nguồn --</option><option>Ngữ liệu gốc</option><option>SGK Ngữ văn</option><option>Phiếu/tài liệu giáo viên</option><option>Nguồn chính thống khác</option></select><div class="actions" style="margin-top:8px"><button type="button" onclick="openLibraryFromVerify()">📚 Chọn bài trong Kho học liệu</button></div><label>Ghi rõ nguồn/bài/trang nếu có</label><input id="sourceDetail"><label>Bằng chứng em tìm được</label><textarea id="evidence"></textarea><label>Kết luận sau đối chiếu</label><select id="verifyConclusion"><option value="">-- Chọn --</option><option>AI đúng</option><option>AI đúng một phần</option><option>AI cần sửa</option></select><button class="primary" onclick="finishVerify()">Tôi đã tự kiểm chứng</button></div></div>
 <div id="decisionGate" class="hidden"><div class="box decision"><h3>⭐ BƯỚC 8 – TỰ QUYẾT ĐỊNH</h3><label>Quyết định của em</label><select id="decision"><option value="">-- Chọn --</option><option>Giữ lại</option><option>Sửa lại</option><option>Không sử dụng ý kiến của AI</option></select><label>Vì sao em quyết định như vậy?</label><textarea id="reason"></textarea><label>Bài làm cuối cùng của em</label><textarea id="finalAnswer"></textarea><h3>📔 Nhật kí tư duy</h3><label>Hôm nay AI giúp em điều gì?</label><textarea id="j1"></textarea><label>Em đã tự sửa điều gì?</label><textarea id="j2"></textarea><label>Điều gì em quyết định không làm theo AI? Vì sao?</label><textarea id="j3"></textarea><button class="primary" onclick="save()">💾 Hoàn thành & lưu tiến bộ</button></div></div></div></div></section>
 <section id="library" class="page"><div class="panel"><h2>📚 KHO HỌC LIỆU KIỂM CHỨNG</h2><p><b>SGK học sinh là nguồn kiểm chứng chính.</b> Kho này chỉ lập chỉ mục bài học, không công khai toàn văn SGK.</p><div id="kbResult"></div><div class="kb" id="kb"></div></div></section>
 <section id="profile" class="page"><div class="panel"><h2>📔 Nhật kí tư duy & tiến bộ</h2><div id="history"></div></div></section>
@@ -92,6 +92,7 @@ footer{padding-bottom:38px}
 const $=id=>document.getElementById(id), val=id=>($(id)?.value||'').trim(); let type='read', gradeData=null, advisorDone=false, verified=false; const HK='hocvan_gd10_history';
 const lessons={6:{1:['Bài 1 Tôi và các bạn','Bài 2 Gõ cửa trái tim','Bài 3 Yêu thương và chia sẻ','Bài 4 Quê hương yêu dấu','Bài 5 Những nẻo đường xứ sở'],2:['Bài 6 Chuyện kể về những người anh hùng','Bài 7 Thế giới cổ tích','Bài 8 Khác biệt và gần gũi','Bài 9 Trái Đất – ngôi nhà chung','Bài 10 Cuốn sách tôi yêu']},7:{1:['Bài 1 Bầu trời tuổi thơ','Bài 2 Khúc nhạc tâm hồn','Bài 3 Cội nguồn yêu thương','Bài 4 Giai điệu đất nước','Bài 5 Màu sắc trăm miền'],2:['Bài 6 Bài học cuộc sống','Bài 7 Thế giới viễn tưởng','Bài 8 Trải nghiệm để trưởng thành','Bài 9 Hòa điệu với tự nhiên','Bài 10 Trang sách và cuộc sống']},8:{1:['Bài 1 Câu chuyện của lịch sử','Bài 2 Vẻ đẹp cổ điển','Bài 3 Lời sông núi','Bài 4 Tiếng cười trào phúng trong thơ','Bài 5 Những câu chuyện hài'],2:['Bài 6 Chân dung cuộc sống','Bài 7 Tin yêu và ước vọng','Bài 8 Nhà văn và trang viết','Bài 9 Hôm nay và ngày mai','Bài 10 Sách – người bạn đồng hành']},9:{1:['Bài 1 Thế giới kì ảo','Bài 2 Những cung bậc tâm trạng','Bài 3 Hồn nước nằm trong tiếng mẹ cha','Bài 4 Khám phá vẻ đẹp văn chương','Bài 5 Đối diện với nỗi đau'],2:['Bài 6 Giải mã những bí mật','Bài 7 Hồn thơ muôn điệu','Bài 8 Tiếng nói của lương tri','Bài 9 Đi và suy ngẫm','Bài 10 Văn học – lịch sử tâm hồn']}};
 function go(id){document.querySelectorAll('.page').forEach(x=>x.classList.remove('on'));$(id).classList.add('on');scrollTo(0,0)}
+function openLibraryFromVerify(){localStorage.setItem('hv_return_verify','1');go('library');setTimeout(()=>$('kb')?.scrollIntoView({behavior:'smooth',block:'start'}),100)}
 function restoreLibrarySource(){
  const detail=localStorage.getItem('hv_source_detail');
  if(!detail)return;
@@ -129,22 +130,26 @@ function useLibrarySource(section){
  if(!selectedSource)return;
  const detail=selectedSource+' – mục '+section;
  localStorage.setItem('hv_source_detail',detail);
+ const returning=localStorage.getItem('hv_return_verify')==='1';
+ localStorage.removeItem('hv_return_verify');
  go('practice');
- if($('setup'))$('setup').classList.add('hidden');
- if($('work'))$('work').classList.remove('hidden');
- if($('graded'))$('graded').classList.remove('hidden');
- if($('verifyGate'))$('verifyGate').classList.remove('hidden');
- if($('decisionGate'))$('decisionGate').classList.add('hidden');
- verified=false;
  restoreLibrarySource();
- progress(7);
- const gate=$('verifyGate');
- if(gate)gate.scrollIntoView({behavior:'smooth',block:'start'});
- setTimeout(()=>{
-   if($('source'))$('source').value='SGK Ngữ văn';
-   if($('sourceDetail'))$('sourceDetail').value=detail;
-   if($('evidence'))$('evidence').focus();
- },350);
+ if(returning && advisorDone && gradeData){
+   $('verifyGate').classList.remove('hidden');
+   $('decisionGate').classList.add('hidden');
+   verified=false;
+   progress(7);
+   setTimeout(()=>{
+     $('source').value='SGK Ngữ văn';
+     $('sourceDetail').value=detail;
+     $('verifyGate').scrollIntoView({behavior:'smooth',block:'start'});
+     $('evidence').focus();
+   },250);
+   return;
+ }
+ alert('Đã chọn nguồn SGK. Hãy thực hiện bài luyện theo quy trình; nguồn này sẽ được dùng ở Bước 7 kiểm chứng.');
+ room(type);
+ localStorage.setItem('hv_source_detail',detail);
 }
 function safe(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}library();progress(1);
 </script></body></html>
