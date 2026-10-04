@@ -24,7 +24,56 @@ header:after{content:"";width:220px;height:220px;right:7%;top:14px;background:ra
 .flow div{position:relative;box-shadow:0 7px 14px rgba(23,54,75,.06)}.flow div:nth-child(1):before{content:"📝 "}.flow div:nth-child(2):before{content:"🧠 "}.flow div:nth-child(3):before{content:"🤖 "}.flow div:nth-child(4):before{content:"💡 "}.flow div:nth-child(5):before{content:"✏️ "}.flow div:nth-child(6):before{content:"🎯 "}.flow div:nth-child(7):before{content:"🔎 "}.flow div:nth-child(8):before{content:"⭐ "}
 .panel>h2{color:#123f5d}.panel>h2:after{content:"";display:block;width:70px;height:5px;border-radius:9px;margin-top:7px;background:linear-gradient(90deg,#2d88b8,#f6c654)}
 .kb button{box-shadow:0 5px 10px rgba(23,54,75,.07)}#lessonDetail,.verify{position:relative;overflow:hidden}.verify:after{content:"📚";position:absolute;right:18px;top:12px;font-size:42px;opacity:.12}
-@media(max-width:800px){.rooms,.grid3,.flow{grid-template-columns:1fr}h1{font-size:32px}.wrap{padding-left:14px;padding-right:14px}.panel{padding:16px}.flow div{min-height:58px}header:after{width:110px;height:110px;right:5px}.hero3d{display:none}.hero-visual{display:block}}</style></head><body>
+@media(max-width:800px){.rooms,.grid3,.flow{grid-template-columns:1fr}h1{font-size:32px}.wrap{padding-left:14px;padding-right:14px}.panel{padding:16px}.flow div{min-height:58px}header:after{width:110px;height:110px;right:5px}.hero3d{display:none}.hero-visual{display:block}}
+/* Giai đoạn 10.5 – làm giao diện sáng, rõ và thân thiện hơn */
+body{font-family:"Segoe UI",Arial,sans-serif}
+.wrap{width:min(1120px,calc(100% - 28px))}
+header .wrap{padding-top:30px;padding-bottom:28px}
+header h1{font-size:clamp(34px,5vw,48px);line-height:1.08}
+header p{font-size:17px;font-weight:700;margin:6px 0 0}
+nav .wrap{justify-content:center}
+nav button{padding:11px 16px;border-radius:999px;font-size:15px}
+.panel>h2{color:var(--navy);letter-spacing:-.3px}
+.rooms{margin-top:14px}
+.room{position:relative;overflow:hidden}
+.room:before{content:"";position:absolute;width:90px;height:90px;border-radius:50%;right:-28px;top:-30px;background:rgba(255,255,255,.65)}
+.room h3{position:relative}
+.room p{min-height:50px}
+.flow{counter-reset:step}
+.flow div{position:relative;flex-direction:column;font-size:14px;line-height:1.25}
+.flow div:before{counter-increment:step;content:counter(step);display:flex;align-items:center;justify-content:center;width:25px;height:25px;border-radius:50%;background:#fff;color:#2879a7;font-weight:900;margin-bottom:5px;box-shadow:0 2px 7px rgba(23,54,75,.08)}
+.flow div.done:before{content:"✓";background:#fff;color:#23814d}
+.flow div.active:before{background:#f6c654;color:#17364b}
+.box{border-radius:18px}
+.good,.warn,.bad,.verify,.decision{border-width:1.5px}
+#library .panel{background:linear-gradient(180deg,#fff 0%,#fbfdff 100%)}
+#kb h3{margin:22px 0 7px;padding:7px 12px;border-left:5px solid #4b9fc9;background:#f0f8fd;border-radius:0 10px 10px 0}
+#kb b{display:inline-block;margin:8px 0 3px;color:#315a72}
+#kb button{background:#edf7fc;border:1px solid #d4e8f2;padding:9px 13px;border-radius:12px}
+#kb button:hover{background:#d9f0fb;border-color:#9fcee3}
+#kbResult>.box{box-shadow:0 10px 28px rgba(40,121,167,.10)}
+#kbResult h3{font-size:21px;color:#174c6d}
+#kbSection .card{background:#fff;border-left:5px solid #f6c654;padding:15px}
+#verifyGate{border-left:5px solid #4b9fc9}
+#decisionGate{border-left:5px solid #8064c7}
+#graded{border-left:5px solid #4aa56d}
+.primary{background:linear-gradient(135deg,#2879a7,#3194c4)!important}
+footer{padding-bottom:38px}
+@media(max-width:800px){
+ .rooms,.grid3{grid-template-columns:1fr}
+ .flow{grid-template-columns:repeat(4,1fr)}
+ .flow div{min-height:72px}
+ nav{position:static}
+ .panel{padding:17px}
+}
+@media(max-width:520px){
+ .wrap{width:min(100% - 18px,1120px)}
+ nav .wrap{gap:5px}
+ nav button{padding:9px 10px;font-size:13px}
+ .flow{grid-template-columns:repeat(2,1fr)}
+ header:after{font-size:120px;right:-15px}
+}
+</style></head><body>
 <header><div class="wrap"><div class="hero-visual"><div><span class="badge">🌟 SẢN PHẨM HỌC SINH • CÔ MAI CỐ VẤN ONLINE</span><h1>HỌC VĂN CÙNG AI</h1><b>Tự suy nghĩ → AI hỗ trợ → Kiểm chứng → Tự quyết định</b></div><div class="hero3d" aria-hidden="true"><div class="book"></div><div class="bot"></div></div></div></div></header>
 <nav><div class="wrap"><button onclick="go('home')">🏠 Trang chủ</button><button onclick="room('read')">📖 Đọc hiểu</button><button onclick="room('tv')">🔎 Tiếng Việt</button><button onclick="room('write')">✍️ Luyện viết</button><button onclick="go('library')">📚 Kho học liệu</button><button onclick="go('profile');historyView()">📔 Nhật kí</button></div></nav>
 <main class="wrap">
